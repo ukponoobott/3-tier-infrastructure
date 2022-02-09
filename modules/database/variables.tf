@@ -29,3 +29,7 @@ variable "dev_database_password" {
     type = string
 }
 
+variable "data-subnet-id" {
+  description = "ID of database subnet"
+  type = string
+}

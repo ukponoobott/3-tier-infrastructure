@@ -35,14 +35,18 @@ module "compute" {
   source         = "./modules/compute"
   location = azurerm_resource_group.dev.location
   resource_group = azurerm_resource_group.dev.name
+  
+  sku = "Standard_B2ms"
+
   web_subnet_id = module.networking.web_subnet_id
+  web-pip = module.pip.web-pip
+
   app_subnet_id = module.networking.app_subnet_id
-  web_host_name = "webserver"
-  web_username = "ukponoobott"
-  web_os_password = "Abcd@1234"
-  app_host_name = "appserver"
-  app_username = "ukponoobott"
-  app_os_password = "Abcd@1234"
+
+  username = "ukponoobott"
+  password = "Abcd@1234"
+
+
 }
 
 # Create db server and db
@@ -50,8 +54,16 @@ module "database" {
   source = "./modules/database"
   location = azurerm_resource_group.dev.location
   resource_group = azurerm_resource_group.dev.name
+  data-subnet-id = module.networking.db_subnet_id
+
   dev_database = "sql-dev-database"
   dev_database_version = "12.0"
   dev_database_admin = "db-admin"
   dev_database_password = "Abcd@1234"
+}
+
+module "pip" {
+  source = "./modules/pip"
+  resource_group = azurerm_resource_group.dev.name
+  location = azurerm_resource_group.dev.location
 }

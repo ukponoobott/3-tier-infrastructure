@@ -24,4 +24,5 @@ resource "azurerm_subnet" "db-subnet" {
   virtual_network_name = azurerm_virtual_network.dev-vnet.name
   resource_group_name  = var.resource_group
   address_prefixes     = var.db_subnet_cidr
+  service_endpoints = ["Microsoft.Sql"]
 }

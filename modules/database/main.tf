@@ -13,3 +13,10 @@ resource "azurerm_sql_database" "db" {
   location            = var.location
   server_name         = azurerm_sql_server.dev.name
 }
+
+resource "azurerm_sql_virtual_network_rule" "sqlvnetrule" {
+  name                = "sql-vnet-rule"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_sql_server.dev.name
+  subnet_id           = var.data-subnet-id
+}

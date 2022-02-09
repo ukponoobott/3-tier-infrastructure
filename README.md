@@ -8,6 +8,8 @@ This defines a simple 3-tier infrastructure deployment in Azure where the enviro
 
 The infratructure operates in a virtual network which has 3 subnets each for a tier. 
 
+![3-tier-acrchitecture](/images/3-tier.png)
+
 
 ## Requirements
 
