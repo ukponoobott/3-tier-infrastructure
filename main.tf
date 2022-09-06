@@ -1,10 +1,6 @@
-provider "azurerm" {
-  features {}
-}
-
 # Create resource group
 resource "azurerm_resource_group" "dev" {
-  name     =  "dev-rg"
+  name     =  "dev-lab-3-tier"
   location = "eastus"
 }
 
