@@ -1,96 +1,73 @@
-# variable "resource_group" {
-#     description = "This specifies the resource group of the virtual machine"
-#     type = string
-# }   
+variable "resource_group_name" {
+  description = "This specifies the resource group of the virtual machine"
+  type        = string
+}
 
-# variable "location" {
-#     description = "This specifies the location of the virtual machine" 
-#     default = "eastus"
-#     type = string
-# }
+variable "location" {
+  description = "This specifies the location of the virtual machine"
+  type        = string
+}
 
-# variable "vnet_cidr" {
-#     description = "This specifies the address apace of the web subnet"
-#     type = string
-# }
+variable "virtual_network_name" {
 
-# variable "web_subnet_cidr" {
-#     description = "This specifies the host name of the web-vm"
-#     type = string
-# }
+}
 
-# variable "app_subnet_cidr" {
-#     description = "This specifies the address apace of the app subnet"
-#     type = string
-# }
+variable "address_space" {
+  description = "This specifies the address space of the virtual network"
+  type        = list(string)
+}
 
-# variable "db_subnet_cidr" {
-#     description = "This specifies the address apace of the app subnet"
-#     type = string
-# }
+variable "subnets" {
+  type = map(string)
+}
 
-# variable "web_subnet_id" {
-#     description = "This specifies the address space of the web subnet"
-#     type = string
-# }
+variable "vm_sku" {
 
-# variable "app_subnet_id" {
-#     description = "This specifies the address space of the app subnet"
-#     type = string
-# }
+}
 
-# variable "db_subnet_id" {
-#     description = "This specifies the address space of the db subnet"
-#     type = string
-# }
+variable "web_instances" {
+  type = list(string)
+}
 
-# variable "web_host_name" {
-#     description = "This specifies the host name of the web-vm"
-#     type = string
-# }
+variable "api_instances" {
+  type = list(string)
+}
 
-# variable "web_username" {
-#     description = "This specifies the username of the web-vm"
-#     type = string
-# }
 
-# variable "web_os_password" {
-#     description = "This specifies the passoword of the web-vm"
-#     type = string
-# }
+variable "db_server_name" {
 
-# variable "app_host_name" {
-#     description = "This specifies the host name of the app-vm"
-#     type = string
-# }
+}
 
-# variable "app_username" {
-#     description = "This specifies the username of the app-vm"
-#     type = string
-# }
 
-# variable "app_os_password" {
-#     description = "This specifies the password of the app-vm"
-#     type = string
-# }
+variable "databases" {
+  type = list(string)
+}
 
-# variable "dev_database" {
-#     description = "This specifies the database name"
-#     type = string
-# }
+variable "database_version" {
+  description = "This specifies the version of the database"
+  type        = string
+}
 
-# variable "dev_database_version" {
-#     description = "This specifies the version of the database"
-#     type = string
-# }
+variable "administrator_login" {
+  description = "This specifies the database administrator login"
+  type        = string
+}
 
-# variable "dev_database_admin" {
-#     description = "This specifies the database administrator login"
-#     type = string
-# }
+variable "administrator_login_password" {
+  description = "This specifies the administrator login password"
+  type        = string
+}
 
-# variable "dev_database_password" {
-#     description = "This specifies the administrator login password"
-#     type = string
-# }
+variable "security_rules" {
+  type = map(object({
+    access                     = string
+    priority                   = number
+    direction                  = string
+    access                     = string
+    source_address_prefix      = optional(list(string), null)
+    source_port_range          = string
+    destination_address_prefix = optional(list(string), null)
+    destination_port_range     = string
+  }))
+}
 
