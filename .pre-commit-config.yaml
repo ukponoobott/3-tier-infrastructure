@@ -1,0 +1,22 @@
+# See http://pre-commit.com for more information
+# See http://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/antonbabenko/pre-commit-terraform.git
+    rev: v1.77.1
+    hooks:
+    - id: terraform_fmt
+    - id: terraform_docs
+    - id: terraform_tflint
+    - id: terraform_tfsec
+  - repo: https://github.com/pre-commit/pre-commit-hooks.git
+    rev: v4.4.0
+    hooks:
+      - id: check-merge-conflict
+      - id: trailing-whitespace
+      - id: check-added-large-files
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: check-case-conflict
+      - id: check-json
+      - id: check-xml
+      - id: detect-private-key
