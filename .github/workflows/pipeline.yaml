@@ -1,0 +1,73 @@
+name: "Manual Deployment"
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        type: string
+        description: "type action: apply or destroy"
+        required: true
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    name: "Manual Workflow"
+    runs-on: "ubuntu-latest"
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    env:
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_SECRET }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: "Install terraform"
+        uses: hashicorp/setup-terraform@main
+        with:
+          terraform_wrapper: true
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        id: init
+        run: |
+          terraform init
+
+      - name: Terraform Destroy
+        if: ${{ inputs.action }} == 'destroy'
+        id: destroy
+        run: terraform destroy --auto-approve
+
+      - name: Terraform Format
+        if: ${{ inputs.action }} == 'apply'
+        id: fmt
+        run: |
+          terraform fmt -check
+        continue-on-error: true
+
+      - name: Terraform Validate
+        if: ${{ inputs.action }} == 'apply'
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        if: ${{ inputs.action }} == 'apply'
+        id: plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        if: ${{ inputs.action }} == 'apply'
+        id: apply
+        run: terraform apply --auto-approve
